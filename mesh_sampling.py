@@ -272,8 +272,6 @@ def generate_transform_matrices_given_downsamples(mesh, downsample_directory, nu
     M.append(mesh)
 
     for i in range(1,num_downsamples+1):
-#         import trimesh
-#         cur_M = trimesh.load(os.path.join(downsample_directory,'template_d{0}.obj'.format(i)))
         cur_M = Mesh(filename=os.path.join(downsample_directory,'template_d{0}.obj'.format(i)))
         cur_D = np.zeros((cur_M.v.shape[0], M[-1].v.shape[0]))
         kd = spatial.KDTree(np.array(M[-1].v))
