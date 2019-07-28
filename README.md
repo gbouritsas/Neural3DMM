@@ -45,7 +45,7 @@ The following is the organization of the dataset directories expected by the cod
       * train.npy (number_meshes, number_vertices, 3) (no Faces because they all share topology)
       * test.npy 
       * template.obj (all of the spiraling and downsampling code is run on the template only once)
-      * downsamples/ (if using not COMA downsampling, we used Meshlab downsamplings)
+      * downsamples/ (if **not** using COMA downsampling, eg we used Meshlab downsamplings)
         * downsample_type/
           * template_d0.obj (same as template.obj)
           * template_d1.obj
