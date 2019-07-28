@@ -46,11 +46,12 @@ The following is the organization of the dataset directories expected by the cod
       * test.npy 
       * template.obj (all of the spiraling and downsampling code is run on the template only once)
       * downsamples/ (if using not COMA downsampling, we used Meshlab downsamplings)
-        * template_d0.obj (same as template.obj)
-        * template_d1.obj
-        * template_d2.obj
-        * template_d3.obj
-        * template_d4.obj
+        * downsample_type/
+          * template_d0.obj (same as template.obj)
+          * template_d1.obj
+          * template_d2.obj
+          * template_d3.obj
+          * template_d4.obj
       * points_train/ (created by data_generation.py)
       * points_val/ (created by data_generation.py)
       * points_test/ (created by data_generation.py)
