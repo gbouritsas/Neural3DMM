@@ -10,7 +10,7 @@
 
 # Repository Requirements
 
-This code was written using Pytorch 0.4.1, however should run with Pytorch 1.0 as well. We use tensorboardX for the training metrics. We recommend setting up a virtual environment using [Miniconda](https://docs.conda.io/en/latest/miniconda.html) and specifically with Python2 (we need Python 2 not for training but for the downsampling and upsampling, see below). To install Pytorch in a conda environment simply run 
+This code was written using Pytorch 0.4.1, however runs with Pytorch 1.1 as well. We use tensorboardX for the training metrics. We recommend setting up a virtual environment using [Miniconda](https://docs.conda.io/en/latest/miniconda.html) and specifically with Python2 (we need Python 2 not for training but for the downsampling and upsampling, see below). To install Pytorch in a conda environment, simply run 
 
 ```
 $ conda install pytorch torchvision -c pytorch
@@ -24,10 +24,11 @@ $ pip install -r requirments.txt
 
 
 ### Downsampling & Upsampling
-For the downsampling code we use a function from the [COMA repository](https://github.com/anuragranj/coma) which in turn uses the [MPI-Mesh](https://github.com/MPI-IS/mesh) package (a mesh library similar to Trimesh or Open3D). This package requires Python 2, which is why we recommend doing everything with Python 2. However once you have cached the generated downsampling and upsampling matrices, it is possible to run the training code with Python 3 as well if necessary. In order to install MPI-Mesh do the following (or read their installation instructions if something is unclear):
+For the downsampling code we use a function from the [COMA repository](https://github.com/anuragranj/coma), specifically the files **mesh_sampling.py** and **shape_data.py** (previously **facemesh.py**) were taken from the COMA repo and adapted to our needs. These in turn use the [MPI-Mesh](https://github.com/MPI-IS/mesh) package (a mesh library similar to Trimesh or Open3D).  This package requires Python 2, which is why we recommend doing everything with Python 2. However once you have cached the generated downsampling and upsampling matrices, it is possible to run the training code with Python 3 as well if necessary. In order to install MPI-Mesh do the following (or read their installation instructions if something is unclear):
 
 ```
 $ git clone https://github.com/MPI-IS/mesh.git
+$ cd mesh
 $ apt-get install libboost-all-dev
 $ make
 $ make install
@@ -91,6 +92,11 @@ jupyter notebook neural3dmm.ipynb
 ```
 
 Where you can see the arguments for the training in a dictionary called **args** in the 2nd cell of the notebook. The first cell has metadata arguments that you need to fill in such as the data **root_dir** and the **dataset** name, whether you want to use the GPU, etc. 
+
+Some important notes:
+* The reference points parameter needs exactly one vertex index per disconnected component of the mesh. So for DFAUST you only need one, but for COMA which has the eyes as diconnected components, you need a reference point on the head as well as one on each eye
+* The spiral_utils.py spiraling code works by walking along the triangulation exploiting the fact that the triangles are all listed in a consistent ordering (either clockwise or counter-clockwise) in order to get the spiral scan ordering for each neighborhood. These are saved as lists (their length depending on number of hops and number of neighbors), these are then truncated to be the length of the mean spiral lenght + 2 standard deviations of the spiral lengths. Afterwards the shorter spirals are padded with -1s, resulting in spiraling indices of equivalent lengths for all the vertices. These are used in the spiral_conv function from **models.py**.
+
 
 
 
