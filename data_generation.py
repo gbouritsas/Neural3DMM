@@ -23,6 +23,16 @@ name = ''
 data = os.path.join(root_dir, dataset, 'preprocessed',name)
 train = np.load(data+'/train.npy')
 
+if os.path.exists(os.path.join(data,'points_train')):
+    os.makedirs(os.path.join(data,'points_train'))
+
+if os.path.exists(os.path.join(data,'points_val')):
+    os.makedirs(os.path.join(data,'points_val'))
+
+if os.path.exists(os.path.join(data,'points_test')):
+    os.makedirs(os.path.join(data,'points_test'))
+
+
 for i in tqdm(range(len(train)-nVal)):
     np.save(os.path.join(data,'points_train','{}'.format(i)+'.npy'),train[i])
 for i in range(len(train)-nVal,len(train)):

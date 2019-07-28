@@ -35,7 +35,6 @@ $ make install
 
 
 
-
 # Data Organization
 
 The following is the organization of the dataset directories expected by the code:
@@ -52,8 +51,13 @@ The following is the organization of the dataset directories expected by the cod
         * template_d2.obj
         * template_d3.obj
         * template_d4.obj
-    
-      
+      * points_train/ (created by data_generation.py)
+      * points_val/ (created by data_generation.py)
+      * points_test/ (created by data_generation.py)
+      * paths_train.npy (created by data_generation.py)
+      * paths_val.npy (created by data_generation.py)
+      * paths_test.npy (created by data_generation.py)
+
     * results/ (created by the code)
       * spiral_autoencoder/
         * step_size/
@@ -61,7 +65,7 @@ The following is the organization of the dataset directories expected by the cod
             * latent_size/
                 * checkpoints/ (has all of the pytorch models saved as well as optimizer state and epoch to continue training)
                 * samples/ (has samples of reconstructions saved throughout training)
-                * predictions/ (not sure what's in here, Giorgos?)
+                * predictions/ (reconstructions on test set)
                 * summaries/ (has all of the tensorboard files)
 
 In order to display all of the Tensorboards for all of the models you have run, simply run from data_root
@@ -71,5 +75,21 @@ $ tensorboard --logdir=results/
 ```
 
 # Running the Code
+
+#### First Data preprocessing 
+
+```
+python data_generation.py --data_directory=/path/to/data_root --dataset_name=DFAUST --num_valid=100
+```
+
+#### Running training
+
+The first time you run the code it will check if you have the downsamples cached (calculating the downsampling and upsampling matrices takes a few minutes), and then does the spiraling code on the template, which is in **spiral_utils.py**, afterwards beginning the training. The training is done in an ipython notebook, which you can run with 
+```
+jupyter notebook neural3dmm.ipynb
+```
+
+Where you can see the arguments for the training in a dictionary called **args** in the 2nd cell of the notebook. The first cell has metadata arguments that you need to fill in such as the data **root_dir** and the **dataset** name, whether you want to use the GPU, etc. 
+
 
 
