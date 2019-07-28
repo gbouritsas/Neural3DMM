@@ -40,46 +40,36 @@ $ make install
 
 The following is the organization of the dataset directories expected by the code:
 
-* data_root
-  * dataset_name (eg DFAUST)
-    * 
+* data_root/
+  * dataset_name/ (eg DFAUST)
+    * preprocessed/
+      * train.npy (number_meshes, number_vertices, 3) (no Faces because they all share topology)
+      * test.npy 
+      * template.obj (all of the spiraling and downsampling code is run on the template only once)
+      * downsamples/ (if using not COMA downsampling, we used Meshlab downsamplings)
+        * template_d0.obj (same as template.obj)
+        * template_d1.obj
+        * template_d2.obj
+        * template_d3.obj
+        * template_d4.obj
+    
+      
+    * results/ (created by the code)
+      * spiral_autoencoder/
+        * step_size/
+          * downsample_type/
+            * latent_size/
+                * checkpoints/ (has all of the pytorch models saved as well as optimizer state and epoch to continue training)
+                * samples/ (has samples of reconstructions saved throughout training)
+                * predictions/ (not sure what's in here, Giorgos?)
+                * summaries/ (has all of the tensorboard files)
 
+In order to display all of the Tensorboards for all of the models you have run, simply run from data_root
+
+```
+$ tensorboard --logdir=results/
+```
 
 # Running the Code
 
 
-
-1. pytorch
-``conda install pytorch torchvision -c pytorch
-``
-
-2. tensorboardX
-``
-pip install tensorboardX
-``
-
-3. Mpi-mesh
-``
-git clone https://github.com/MPI-IS/mesh.git
-``
-
-``
-apt-get install libboost-all-dev
-``
-
-``
-make
-``
-
-``
-make install
-``
-
-OR
-
-4. trimesh
-``
-pip install trimesh
-``
-
-6. pip install -r requirements.txt
