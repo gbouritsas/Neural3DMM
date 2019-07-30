@@ -93,7 +93,7 @@ Where you can see the arguments for the training in a dictionary called **args**
 
 Some important notes:
 * The reference points parameter needs exactly one vertex index per disconnected component of the mesh. So for DFAUST you only need one, but for COMA which has the eyes as diconnected components, you need a reference point on the head as well as one on each eye
-* The **spiral_utils.py** spiraling code works by walking along the triangulation exploiting the fact that the triangles are all listed in a consistent ordering (either clockwise or counter-clockwise) in order to get the spiral scan ordering for each neighborhood. These are saved as lists (their length depending on number of hops and number of neighbors), these are then truncated to be the length of the mean spiral lenght + 2 standard deviations of the spiral lengths. Afterwards the shorter spirals are padded with -1s, resulting in spiraling indices of equivalent lengths for all the vertices. These are used in the spiral_conv function from **models.py**.
+* The **spiral_utils.py** spiraling code works by walking along the triangulation exploiting the fact that the triangles are all listed in a consistent ordering (either clockwise or counter-clockwise) in order to get the spiral scan ordering for each neighborhood. These are saved as lists (their length depending on number of hops and number of neighbors), these are then truncated to be the length of the mean spiral length + 2 standard deviations of the spiral lengths. Afterwards the shorter spirals are padded with -1s, resulting in spiraling indices of equivalent lengths for all the vertices. These are used in the spiral_conv function from **models.py**.
 
 
 
