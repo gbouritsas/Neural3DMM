@@ -40,14 +40,14 @@ $ make install
 
 The following is the organization of the dataset directories expected by the code:
 
-* data_root/
-  * dataset_name/ (eg DFAUST)
+* data **root_dir**/
+  * **dataset** name/ (eg DFAUST)
     * preprocessed/
       * train.npy (number_meshes, number_vertices, 3) (no Faces because they all share topology)
       * test.npy 
       * template.obj (all of the spiraling and downsampling code is run on the template only once)
-      * downsamples/ (if **not** using COMA downsampling, eg we used Meshlab downsamplings)
-        * downsample_type/
+      * templates/ (if **not** using COMA downsampling, eg we used Meshlab downsamplings)
+        * downsample_method/
           * template_d0.obj (same as template.obj)
           * template_d1.obj
           * template_d2.obj
@@ -62,15 +62,13 @@ The following is the organization of the dataset directories expected by the cod
 
     * results/ (created by the code)
       * spiral_autoencoder/
-        * step_size/
-          * downsample_type/
-            * latent_size/
-                * checkpoints/ (has all of the pytorch models saved as well as optimizer state and epoch to continue training)
-                * samples/ (has samples of reconstructions saved throughout training)
-                * predictions/ (reconstructions on test set)
-                * summaries/ (has all of the tensorboard files)
+          * latent_size/
+            * checkpoints/ (has all of the pytorch models saved as well as optimizer state and epoch to continue training)
+            * samples/ (has samples of reconstructions saved throughout training)
+            * predictions/ (reconstructions on test set)
+            * summaries/ (has all of the tensorboard files)
 
-In order to display all of the Tensorboards for all of the models you have run, simply run from data_root
+In order to display all of the Tensorboards for all of the models you have run, simply run from **root_dir**
 
 ```
 $ tensorboard --logdir=results/
@@ -81,21 +79,21 @@ $ tensorboard --logdir=results/
 #### First Data preprocessing 
 
 ```
-python data_generation.py --data_directory=/path/to/data_root --dataset_name=DFAUST --num_valid=100
+$ python data_generation.py --root_dir=/path/to/data_root_dir --dataset=DFAUST --num_valid=100
 ```
 
 #### Running training
 
 The first time you run the code it will check if you have the downsamples cached (calculating the downsampling and upsampling matrices takes a few minutes), and then does the spiraling code on the template, which is in **spiral_utils.py**, afterwards beginning the training. The training is done in an ipython notebook, which you can run with 
 ```
-jupyter notebook neural3dmm.ipynb
+$ jupyter notebook neural3dmm.ipynb
 ```
 
 Where you can see the arguments for the training in a dictionary called **args** in the 2nd cell of the notebook. The first cell has metadata arguments that you need to fill in such as the data **root_dir** and the **dataset** name, whether you want to use the GPU, etc. 
 
 Some important notes:
 * The reference points parameter needs exactly one vertex index per disconnected component of the mesh. So for DFAUST you only need one, but for COMA which has the eyes as diconnected components, you need a reference point on the head as well as one on each eye
-* The spiral_utils.py spiraling code works by walking along the triangulation exploiting the fact that the triangles are all listed in a consistent ordering (either clockwise or counter-clockwise) in order to get the spiral scan ordering for each neighborhood. These are saved as lists (their length depending on number of hops and number of neighbors), these are then truncated to be the length of the mean spiral lenght + 2 standard deviations of the spiral lengths. Afterwards the shorter spirals are padded with -1s, resulting in spiraling indices of equivalent lengths for all the vertices. These are used in the spiral_conv function from **models.py**.
+* The **spiral_utils.py** spiraling code works by walking along the triangulation exploiting the fact that the triangles are all listed in a consistent ordering (either clockwise or counter-clockwise) in order to get the spiral scan ordering for each neighborhood. These are saved as lists (their length depending on number of hops and number of neighbors), these are then truncated to be the length of the mean spiral lenght + 2 standard deviations of the spiral lengths. Afterwards the shorter spirals are padded with -1s, resulting in spiraling indices of equivalent lengths for all the vertices. These are used in the spiral_conv function from **models.py**.
 
 
 
