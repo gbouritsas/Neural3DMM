@@ -8,4 +8,3 @@ ipython
 tensorboard
 tensorboardX
 trimesh
-opendr
