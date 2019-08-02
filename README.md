@@ -37,11 +37,8 @@ The following is the organization of the dataset directories expected by the cod
   * **dataset** name/ (eg DFAUST)
     * template
       * template.obj (all of the spiraling and downsampling code is run on the template only once)
-      * downsample_method/ (in case you use a different mesh decimation algorithm)
-        * template_d0.obj (same as template.obj)
-        * template_d1.obj
-        * template_d2.obj
-            ...           (depending on the levels of hierarchy you use)
+      * downsample_method/
+        * downsampling_matrices.pkl (created by the code the first time you run it)
     * preprocessed/
       * train.npy (number_meshes, number_vertices, 3) (no Faces because they all share topology)
       * test.npy 
