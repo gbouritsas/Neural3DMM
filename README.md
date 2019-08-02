@@ -53,6 +53,8 @@ The following is the organization of the dataset directories expected by the cod
 
 #### Data preprocessing 
 
+In order to use a pytorch dataloader for training and testing, we split the data into seperate files by:
+
 ```
 $ python data_generation.py --root_dir=/path/to/data_root_dir --dataset=DFAUST --num_valid=100
 ```
