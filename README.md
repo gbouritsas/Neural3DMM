@@ -86,7 +86,7 @@ Please consider citing our work if you find it useful:
 
 ```
 @InProceedings{bouritsas2019neural,
-    author = {Bouritsas, Giorgos and Bokhnyak, Sergiy and Bronstein, Michael and Zafeiriou, Stefanos},
+    author = {Bouritsas, Giorgos and Bokhnyak, Sergiy and Ploumpis, Stylianos and Bronstein, Michael and Zafeiriou, Stefanos},
     title = {Neural 3D Morphable Models: Spiral Convolutional Networks for 3D Shape Representation Learning and Generation},
     booktitle   = {The IEEE International Conference on Computer Vision (ICCV)},
     year        = {2019}
