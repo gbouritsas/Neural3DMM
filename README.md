@@ -22,7 +22,7 @@ $ conda install pytorch torchvision -c pytorch
 Then the rest of the requirements can be installed with 
 
 ```
-$ pip install -r requirments.txt
+$ pip install -r requirements.txt
 ```
 
 ### Mesh Decimation
